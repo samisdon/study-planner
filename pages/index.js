@@ -10,15 +10,21 @@ export default function Home() {
     if (!subject || !hours) return;
 
     setLoading(true);
+    setResult("");
 
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subject, hours }),
-    });
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subject, hours }),
+      });
 
-    const data = await res.json();
-    setResult(data.plan);
+      const data = await res.json();
+      setResult(data.plan);
+    } catch (error) {
+      setResult("Something went wrong.");
+    }
+
     setLoading(false);
   };
 
@@ -40,14 +46,14 @@ export default function Home() {
         onChange={(e) => setHours(e.target.value)}
       />
 
-      <button onClick={generatePlan}>
-        {loading ? "Generating..." : "Generate Plan"}
+      <button onClick={generatePlan} disabled={loading}>
+        {loading ? "⚡ Generating..." : "Generate Plan"}
       </button>
 
       {result && (
         <div className="result">
           <h2>Your Plan:</h2>
-          <p>{result}</p>
+          <pre>{result}</pre>
         </div>
       )}
     </div>
