@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../styles/globals.css";
 
 export default function Home() {
   const [subject, setSubject] = useState("");
@@ -8,12 +7,16 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const generatePlan = async () => {
+    if (!subject || !hours) return;
+
     setLoading(true);
+
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ subject, hours }),
     });
+
     const data = await res.json();
     setResult(data.plan);
     setLoading(false);
