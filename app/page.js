@@ -33,6 +33,7 @@ export default function Home() {
     const subjectList = subjects.split(",");
     const today = new Date();
     const exam = new Date(examDate);
+
     const daysLeft = Math.ceil(
       (exam.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
@@ -48,11 +49,9 @@ export default function Home() {
       const date = new Date();
       date.setDate(today.getDate() + i);
 
-      const subject = subjectList[i % subjectList.length].trim();
-
       generatedPlan.push({
         date: date.toDateString(),
-        subject: subject,
+        subject: subjectList[i % subjectList.length].trim(),
         hours: Math.ceil(dailyHours / subjectList.length),
         done: false,
       });
@@ -76,22 +75,27 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-6 transition-all duration-300 ${
-        darkMode ? "bg-slate-900" : "bg-slate-200"
+      className={`min-h-screen flex items-center justify-center p-6 transition-all duration-500 ${
+        darkMode
+          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800"
+          : "bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200"
       }`}
     >
       <div
-        className={`w-full max-w-xl rounded-2xl p-6 shadow-xl transition-all duration-300 ${
+        className={`w-full max-w-xl rounded-2xl p-6 shadow-2xl backdrop-blur-lg border transition-all duration-300 ${
           darkMode
-            ? "bg-slate-800 text-white"
-            : "bg-white text-slate-800"
+            ? "bg-white/10 text-white border-white/20"
+            : "bg-white/70 text-slate-800 border-white/40"
         }`}
       >
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">AI Smart Study Planner</h1>
+          <h1 className="text-2xl font-bold">
+            ✨ AI Smart Study Planner
+          </h1>
+
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="px-3 py-1 rounded bg-indigo-500 text-white text-sm"
+            className="px-3 py-1 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm hover:scale-105 transition"
           >
             {darkMode ? "Light" : "Dark"}
           </button>
@@ -122,18 +126,18 @@ export default function Home() {
 
         <button
           onClick={generatePlan}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-300"
+          className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 rounded-lg hover:scale-105 transition duration-300 shadow-lg"
         >
-          Generate AI Plan
+          🚀 Generate AI Plan
         </button>
 
         {plan.length > 0 && (
           <>
             <div className="mt-6">
               <p className="font-medium">Progress: {progress}%</p>
-              <div className="w-full bg-slate-500 h-3 rounded-full mt-2">
+              <div className="w-full bg-white/30 h-3 rounded-full mt-2">
                 <div
-                  className="bg-emerald-400 h-3 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
@@ -143,18 +147,17 @@ export default function Home() {
               {plan.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between items-center p-4 rounded-lg mb-3 ${
-                    darkMode
-                      ? "bg-slate-700"
-                      : "bg-slate-100"
+                  className={`flex justify-between items-center p-4 rounded-xl mb-3 shadow ${
+                    darkMode ? "bg-white/10" : "bg-white"
                   }`}
                 >
                   <div>
                     <p className="font-semibold">{item.date}</p>
-                    <p className="text-sm">
+                    <p className="text-sm opacity-80">
                       {item.subject} - {item.hours} hrs
                     </p>
                   </div>
+
                   <input
                     type="checkbox"
                     className="w-5 h-5 accent-emerald-500"
