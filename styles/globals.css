@@ -1,9 +1,15 @@
-body {
+/* Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #141e30, #243b55);
-  color: white;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,16 +20,17 @@ body {
 .container {
   background: rgba(255, 255, 255, 0.05);
   padding: 40px;
-  border-radius: 15px;
-  width: 400px;
+  border-radius: 16px;
+  width: 420px;
   text-align: center;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
 }
 
 /* Heading */
 h1 {
   margin-bottom: 20px;
+  font-size: 28px;
   background: linear-gradient(90deg, #00f5a0, #00d9f5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -33,12 +40,18 @@ h1 {
 input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
+  margin: 12px 0;
   border-radius: 8px;
   border: none;
   outline: none;
   background: #1f2a40;
   color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus {
+  background: #263859;
 }
 
 /* Button */
@@ -49,14 +62,20 @@ button {
   border: none;
   cursor: pointer;
   background: linear-gradient(90deg, #00f5a0, #00d9f5);
-  color: black;
+  color: #000;
   font-weight: bold;
   margin-top: 10px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 button:hover {
   transform: scale(1.05);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Result Box */
@@ -66,4 +85,16 @@ button:hover {
   padding: 15px;
   border-radius: 10px;
   text-align: left;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.result::-webkit-scrollbar {
+  width: 6px;
+}
+
+.result::-webkit-scrollbar-thumb {
+  background: #00d9f5;
+  border-radius: 5px;
 }
